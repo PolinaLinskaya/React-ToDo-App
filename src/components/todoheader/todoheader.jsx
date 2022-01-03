@@ -1,37 +1,33 @@
-import React, { useRef, useEffect } from "react";
-import "./TodoHeader.scss";
+import React, { useRef } from 'react';
+import "./style.scss";
+import Button from '@mui/material/Button';
 
-const TodoHeader = ({ todos, addTodo }) => {
-  const inputRef = useRef(null);
+const TodoHeader = ({addTodo}) => {
+    const inputRef = useRef(null);
 
-  const createTodo = (event) => {
-    event.preventDefault();
+    const createTodo = (event) => {
+        event.preventDefault();
 
-    if (inputRef.current.value == "") {
-      return;
-    }
+        const todoObj = {
+            id: new Date().getTime(),
+            title: inputRef.current.value,
+            completed: false,
+        };
 
-    const todoObj = {
-      id: new Date().getTime(),
-      title: inputRef.current.value,
-      completed: false,
+        addTodo(todoObj);
+
+        inputRef.current.value = "";
     };
 
-    addTodo(todoObj);
-
-    inputRef.current.value = "";
-  };
-
-  return (
-    <div className="todo-header">
-      <form className="todo-form" onSubmit={createTodo}>
-        <input className="todo-text" type="text" ref={inputRef} />
-        <button className="todo-addbutton" type="submit">
-          Add the Task!
-        </button>
-      </form>
-    </div>
-  );
-};
+    return (
+        <div className='header-wrapper'>
+            <h1 className='app-title'>Create your checklist</h1>
+            <form onSubmit={createTodo} className='form'>
+                <input ref = {inputRef} className='input' type="text" />
+                <Button variant="contained" className='btn' type='submit'>Add</Button>
+            </form>
+        </div>
+    )
+}
 
 export default TodoHeader;
